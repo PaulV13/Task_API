@@ -1,15 +1,15 @@
 require("dotenv").config();
-const express = require('express');
-const morgan = require('morgan');
+const express = require("express");
+const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
-const cors = require('cors');
+const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 
-const tareasRoutes = require("./routes/tareas");
+const notasRoutes = require("./routes/notas");
 const usuariosRoutes = require("./routes/usuarios");
-const validateToken = require("./middlewares/validate-token")
+const validateToken = require("./middlewares/validate-token");
 
 //Conexion a la base de datos mongodb
 mongoose
@@ -22,20 +22,20 @@ mongoose
   .catch((err) => console.log(err));
 
 //Configuracion
-app.set('host', process.env.HOST || '0.0.0.0')
-app.set('port', process.env.PORT || 3001);
-app.set('json spaces', 2);
+app.set("host", process.env.HOST || "0.0.0.0");
+app.set("port", process.env.PORT || 3001);
+app.set("json spaces", 2);
 
 //Middlewares
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 //Rutas
-app.use("/api/tareas", validateToken, tareasRoutes);
+app.use("/api/notas", validateToken, notasRoutes);
 app.use("/api/usuarios", usuariosRoutes);
 
 //Empezando el servidor
-app.listen(app.get('port'), app.get('host'), () => {
-  console.log(`Server on port ${app.get('port')}`);
+app.listen(app.get("port"), app.get("host"), () => {
+  console.log(`Server on port ${app.get("port")}`);
 });
